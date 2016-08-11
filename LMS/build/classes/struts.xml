@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+
+	<package name="myPack" extends="struts-default,json-default">
+		<interceptors>
+			<interceptor name="cache" class="com.security.CacheInterceptor" />
+			<interceptor name="loginSessionCheck" class="com.security.LoginInterceptors" />
+
+			<interceptor-stack name="nonLoginSessionCheck">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="cache" />
+			</interceptor-stack>
+			<interceptor-stack name="myDefaultStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="loginSessionCheck" />
+				<interceptor-ref name="cache" />
+			</interceptor-stack>
+		</interceptors>
+
+		<default-interceptor-ref name="myDefaultStack" />
+
+		<action name="eventInsertAction" class="com.ca.actions.EventInsertAction">
+			<result name="input">create_event.jsp</result>
+			<result name="success">Create_Event_Success.jsp</result>
+			<result name="error">Create_Event_Error.jsp</result>
+		</action>
+
+		<action name="expensesAction" class="com.ca.actions.ExpensesAction">
+			<result name="input">expenses.jsp</result>
+			<result name="success">expenses.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="expensesViewAction" class="com.ca.actions.ExpensesViewAction">
+			<result name="success">expenses.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="addUsersActionByAdmin" class="com.ca.actions.AddUserByAdminAction">
+			<result name="input">adduser.jsp</result>
+			<result name="success">Add_User_Success.jsp</result>
+			<result name="error">Add_User_Error.jsp</result>
+		</action>
+
+		<action name="viewUsersAdminPanel" class="com.ca.actions.RetrieveUsersForAdminAction">
+			<result name="input">viewusers.jsp</result>
+			<result name="success">viewusers.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="delete" class="com.ca.actions.DeleteUserForAdminAction">
+			<result name="input">viewusers.jsp</result>
+			<result name="success">Delete_User_Success.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="getdata" class="com.ca.actions.DataForViewOrEditUsers">
+			<result name="input">viewusers.jsp</result>
+			<result name="success">updateuser.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="UpdateUserRoleByAdmin" class="com.ca.actions.UpdateUsersByAdminAction">
+			<result name="input">updateuser.jsp</result>
+			<result name="success">Update_User_Success.jsp</result>
+			<result name="error">Update_User_Error.jsp</result>
+		</action>
+		<action name="LoginAction" class="com.ca.actions.UserLoginAction">
+			<interceptor-ref name="nonLoginSessionCheck" />
+			<result name="input">loginpage.jsp</result>
+			<result name="success">index.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+
+		<action name="HomeAction" class="com.ca.actions.HomeAction">
+
+			<result name="success">index.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+
+		<action name="LogoutAction" method="logout"
+			class="com.ca.actions.UserLoginAction">
+			<result name="input">index.jsp</result>
+			<result name="success">loginpage.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="GetOwnData" class="com.ca.actions.UserLoginAction">
+			<result name="input">index.jsp</result>
+			<result name="success">editinfo.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+
+		<action name="ViewDetailsForBillsJsp" class="com.ca.actions.RetrieveEvNaCoNaAction">
+			<result name="success">bills.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+		<action name="ShowDetails"
+			class="com.ca.actions.FetchDetailsForBillsJspTableAction">
+			<result name="input">bills.jsp</result>
+			<result name="success">bills.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+		<action name="showEventDetails" class="com.ca.actions.RetrieveEvNaCoNaAction"
+			method="showEventDetails">
+			<result name="success"></result>
+		</action>
+
+		<action name="gridMachine" class="com.ca.actions.ExpensesViewAction">
+			<result name="input">Struts2Jquery.jsp</result>
+			<result name="success">Struts2Jquery.jsp</result>
+			<result name="error">Error.jsp</result>
+
+		</action>
+		<action name="myForm" class="com.ca.actions.RetrieveEvNaCoNaAction">
+			<result name="input">bills.jsp</result>
+			<result name="success">bills.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="ViewBillsJspDetails" class="com.ca.actions.ViewBillsDetailsAction">
+			<result name="input">bills.jsp</result>
+			<result name="success">billdetails.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="UpdateBillsAction" class="com.ca.actions.UpdateBillDetailsAction">
+			<result name="input">billdetails.jsp</result>
+			<result name="success">Update_Bill_Success.jsp</result>
+			<result name="error">Update_Bill_Error.jsp</result>
+		</action>
+
+		<action name="profarmaAction" class="com.ca.actions.GenerateProfarmaAction">
+			<result name="input">bills.jsp</result>
+			<result name="success">profarma.jsp</result>
+			<result name="error">Create_Proforma_Error.jsp</result>
+		</action>
+		<action name="debitAction" class="com.ca.actions.GenerateDebitAction">
+			<result name="input">bills.jsp</result>
+			<result name="success">debitnote.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="invoiceAction" class="com.ca.actions.GenerateInvoiceAction">
+			<result name="input">bills.jsp</result>
+			<result name="success">invoice.jsp</result>
+			<result name="error">Create_Invoice_Error.jsp</result>
+		</action>
+
+
+		<action name="profarmaPdfAction" class="com.ca.actions.ProfarmaPDFAction">
+		</action>
+		<action name="DebitPDFAction" class="com.ca.actions.DebitPDFAction">
+		</action>
+
+		<action name="InvoicePDFAction" class="com.ca.actions.InvoicePDFAction">
+		</action>
+
+		<action name="ViewDetailsForGeneralReports" class="com.ca.actions.DataForGeneralReportsAction">
+			<result name="success">general_report.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="generalPdfAction" class="com.ca.actions.DataForGeneralReportsAction"
+			method="generatePdfGeneral">
+		</action>
+		<action name="generatePdfFinancial" class="com.ca.actions.DataForFinancialReportAction"
+			method="generatePdfFinancial">
+		</action>
+
+		<action name="financialPdfAction" class="com.ca.actions.DataForFinancialReportAction">
+			<result name="success">financial_report.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="myFormFinancial" class="com.ca.actions.DataForFinancialReportAction">
+			<result name="success">financial_report.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="generalXlsAction" class="com.ca.actions.DataForGeneralReportsAction"
+			method="generateGeneralXls">
+		</action>
+		<action name="ViewEditEventsViewAction" class="com.ca.actions.DataForViewOrEditEventsAction">
+			<result name="success">editevents.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="ViewPastEventViewAction" class="com.ca.actions.PastEventViewAction">
+			<result name="success">editPastEvents.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="ViewClosedEventViewAction" class="com.ca.actions.ClosedEventViewAction">
+			<result name="success">editClosedEvents.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="ViewUpcomingEventViewAction" class="com.ca.actions.UpcomingEventViewAction">
+			<result name="success">editUpcomingEvents.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="getDataForViewEvents" class="com.ca.actions.RetrieveEventsAction">
+			<result name="input">editevents.jsp</result>
+			<result name="success">viewevents.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+		<action name="UpdateEventAction" class="com.ca.actions.getLicenseIdAction">
+			<result name="input">viewevents.jsp</result>
+			<result name="success">update_events.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+		<action name="FinalUpdateEventsAction" class="com.ca.actions.UpdateLicenseOfEventsAction">
+			<result name="input">update_events.jsp</result>
+			<result name="success">Update_License_Success.jsp</result>
+			<result name="error">Update_License_Error.jsp</result>
+		</action>
+		<action name="ViewDetailsForSales" class="com.ca.actions.SalesReportAction">
+			<result name="success">sales_report.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="salesPdfAction" class="com.ca.actions.SalesReportAction"
+			method="generatePdfSales">
+		</action>
+		<action name="myDdForm" class="com.ca.actions.DdReportAction">
+			<result name="input">dd_report.jsp</result>
+			<result name="success">dd_report.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+		<action name="ViewDetailsForDd" class="com.ca.actions.DdReportAction">
+			<result name="success">dd_report.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+		<action name="generatePdfForDd" class="com.ca.actions.DdReportAction"
+			method="generatePdfDd">
+		</action>
+
+		<action name="myFormGeneral" class="com.ca.actions.DataForGeneralReportsAction">
+			<result name="input">general_report.jsp</result>
+			<result name="success">general_report.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+
+		<action name="generateXlsFinancial" class="com.ca.actions.DataForFinancialReportAction"
+			method="generateFinancialXls">
+		</action>
+
+		<action name="generateXlsSales" class="com.ca.actions.SalesReportAction"
+			method="generateSalesXls">
+		</action>
+
+		<action name="generateXlsForDd" class="com.ca.actions.DdReportAction"
+			method="generateDdXls">
+		</action>
+
+		<action name="deleteEvent" class="com.ca.actions.DeleteEventAction">
+			<result name="success">EventDeleteSuccess.jsp</result>
+			<result name="error">EventDeleteError.jsp</result>
+		</action>
+
+		<action name="FirstForm" class="com.ca.actions.HomeAction">
+			<result name="input">index.jsp</result>
+			<result name="success">index.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+			<action name="SecondForm" class="com.ca.actions.DataForViewOrEditEventsAction">
+			<result name="input">editevents.jsp</result>
+			<result name="success">editevents.jsp</result>
+			<result name="error">Error.jsp</result>
+		</action>
+	
+	</package>
+</struts>
